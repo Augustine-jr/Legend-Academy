@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'; // Import the auth store
+import { useAuthStore } from '@/stores/authStore' // Import the auth store
 import MainLayout from '@/components/Layout/MainLayout.vue'
 import LoginView from '@/views/auth/LoginView.vue'
 
@@ -46,18 +46,18 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
-});
+})
 
 // Navigation guards
 router.beforeEach((to, from, next) => {
-  const authStore = useAuthStore();
+  const authStore = useAuthStore()
 
   // If the route requires authentication and the user is not logged in, redirect to the login page
-  if (to.meta.requiresAuth &&!authStore.isAuthenticated) {
-    next({ path: '/' });
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    next({ path: '/' })
   } else {
-    next();
+    next()
   }
-});
+})
 
 export default router
