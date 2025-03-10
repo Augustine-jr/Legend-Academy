@@ -1,3 +1,4 @@
+import { useAuthStore } from '@/stores/authStore';
 import api from '@/utils/api'
 
 
@@ -25,9 +26,11 @@ export interface User {
 // AuthService to handle authentication API requests
 export const authService = {
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
+    const authStore = useAuthStore()
     try {
       // Send a POST request to login
       const { data } = await api.post<AuthResponse>('/auth/login', credentials)
+      authStore.setUser(data.user, data.token) // Store user details and token
       return data // Return user details and token
     } catch (error) {
       console.error('Login failed', error)
